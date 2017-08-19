@@ -57,7 +57,6 @@ export default class App extends Component {
     let localStorage = window.localStorage;
 
     if( !localStorage.getItem( 'todos' ) ) {
-      console.log( "nothing loaded" );
       fetch( "https://jsonplaceholder.typicode.com/todos?userId=1" )
       .then( (res ) => res.json( ) )
       .then( json => {
@@ -68,7 +67,6 @@ export default class App extends Component {
         console.error( err );
       } );
     } else {
-      console.log( "stuff there" );
       this.loadTodos( );
       
     }
