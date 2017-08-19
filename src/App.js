@@ -38,22 +38,41 @@ export default class App extends Component {
       todos : items
     } );
     
+    this.saveTodos( items );
+  }
+
+  saveTodos( todos ) {
+    localStorage.setItem( 'todos', JSON.stringify( todos ) );        
+  }
+
+  loadTodos( ) {
+    this.setState( {
+      todos : JSON.parse( localStorage.getItem( 'todos' ) )
+    }, ( ) => { 
+      /* if need to do something after state mutated. */ 
+    } );
   }
 
   getTodos( ) {
-    fetch( "https://jsonplaceholder.typicode.com/todos?userId=1" )
-    .then( (res ) => res.json( ) )
-    .then( json => {
-      //testing loader image
-      setTimeout( ( ) => {
-        this.setState( {
-          todos : json
-        }, ( ) => { /* if need to do something after state mutated. */ } );
-      }, 3000 )
-    } )
-    .catch( err => {
-      console.error( err );
-    } );
+    let localStorage = window.localStorage;
+
+    if( !localStorage.getItem( 'todos' ) ) {
+      console.log( "nothing loaded" );
+      fetch( "https://jsonplaceholder.typicode.com/todos?userId=1" )
+      .then( (res ) => res.json( ) )
+      .then( json => {
+        this.saveTodos( json );
+        this.loadTodos( );
+      } )
+      .catch( err => {
+        console.error( err );
+      } );
+    } else {
+      console.log( "stuff there" );
+      this.loadTodos( );
+      
+    }
+
   }
 
   render( ) {
@@ -61,9 +80,10 @@ export default class App extends Component {
       <div className="App">
         <AppBar
           title="React Todo Example"
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
-        />
-        <h1 className="todo-header">Todo List ({this.state.todos.length})</h1>
+          iconClassNameRight="muidocs-icon-navigation-expand-more">
+          a thing
+        </AppBar>
+        <h1 className="todo-header">Todo List ({ this.state.todos.length })</h1>
         <Paper 
           className="content" 
           zDepth={3}>
