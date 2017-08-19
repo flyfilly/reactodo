@@ -4,6 +4,9 @@ import Paper from 'material-ui/Paper';
 import TodoList from './components/TodoList';
 import LinearProgress from 'material-ui/LinearProgress';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import Home from 'material-ui/svg-icons/action/home';
+import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import './App.css';
 
 const styles = {
@@ -73,13 +76,19 @@ export default class App extends Component {
 
   }
 
+  something( ) {
+    console.log( "clicked" );
+  }
+
   render( ) {
     return (
       <div className="App">
         <AppBar
           title="React Todo Example"
-          iconClassNameRight="muidocs-icon-navigation-expand-more">
-          a thing
+          onLeftIconButtonTouchTap={ this.something }
+          iconElementLeft={ <IconButton><Home /></IconButton> }
+          iconElementRight={ <IconButton><ArrowForward /></IconButton> }>
+          
         </AppBar>
         <h1 className="todo-header">Todo List ({ this.state.todos.length })</h1>
         <Paper 
